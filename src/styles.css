@@ -1,0 +1,11 @@
+:root {
+  --shapeDegrees: 0deg;
+  --shapeTop: 150px;
+  --shapeLeft: 300px;
+}
+
+body {
+  background-size: 15px 15px;
+  background-image: linear-gradient(to right, #ddd 1px, transparent 1px), linear-gradient(to bottom, #ddd 1px, transparent 1px);
+  background-color: #eee;
+}
