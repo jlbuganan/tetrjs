@@ -1,7 +1,5 @@
 :root {
-  --shapeDegrees: 0deg;
-  --shapeTop: 150px;
-  --shapeLeft: 300px;
+  --blockSize: 15px;
 }
 
 body {
