@@ -7,6 +7,7 @@ let shape = {
   rotationIndex: 1,
   type: ''
 };
+let shapeTypes = [ 't', 'i', 'j', 'l', 's', 'z', 'o' ];
 
 // Stats
 let xPos = document.querySelector('#xPos');
@@ -14,10 +15,18 @@ let yPos = document.querySelector('#yPos');
 
 // Get current shape and set initial position
 let currentShape = document.querySelector('#currentShape');
+generateRandomShape();
 setXandY(shape.left, shape.top);
 
 // Listen for keydown
 window.addEventListener('keydown', transformShape);
+
+function generateRandomShape() {
+  randomIndex = Math.floor(Math.random() * 6);
+  shape.type = shapeTypes[randomIndex];
+  currentShape.classList.remove(shapeTypes.join(','));
+  currentShape.classList.add(shape.type);
+}
 
 function transformShape(e) {
   switch(e.keyCode) {

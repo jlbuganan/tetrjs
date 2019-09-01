@@ -1,8 +1,6 @@
 
 .shape {
   position: absolute;
-  background-color: #ccc;
-  transition: all .1s ease-in-out;
 }
 
 .block {
