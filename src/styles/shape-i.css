@@ -1,0 +1,91 @@
+/* === LINE (I) SHAPE ================= */
+.i {
+  width: calc(var(--blockSize) * 4);
+  height: calc(var(--blockSize) * 4);
+}
+/*
+
+  [ ][ ][ ][ ]
+
+  */
+.i.rot-1 > div.block:nth-child(1) {
+  top: calc(var(--blockSize));
+  left: 0;
+}
+.i.rot-1 > div.block:nth-child(2) {
+  top: calc(var(--blockSize));
+  left: calc(var(--blockSize));
+}
+.i.rot-1 > div.block:nth-child(3) {
+  top: calc(var(--blockSize));
+  left: calc(var(--blockSize) * 2);
+}
+.i.rot-1 > div.block:nth-child(4) {
+  top: calc(var(--blockSize));
+  left: calc(var(--blockSize) * 3);
+}
+/*
+      [ ]
+      [ ]
+      [ ]
+      [ ]
+*/
+.i.rot-2 > div.block:nth-child(1) {
+  top: 0;
+  left: calc(var(--blockSize) * 2);
+}
+.i.rot-2 > div.block:nth-child(2) {
+  top: calc(var(--blockSize));
+  left: calc(var(--blockSize) * 2);
+}
+.i.rot-2 > div.block:nth-child(3) {
+  top: calc(var(--blockSize) * 2);
+  left: calc(var(--blockSize) * 2);
+}
+.i.rot-2 > div.block:nth-child(4) {
+  top: calc(var(--blockSize) * 3);
+  left: calc(var(--blockSize) * 2);
+}
+/*
+
+
+  [ ][ ][ ][ ]
+*/
+.i.rot-3 > div.block:nth-child(1) {
+  top: calc(var(--blockSize) * 2);
+  left: 0;
+}
+.i.rot-3 > div.block:nth-child(2) {
+  top: calc(var(--blockSize) * 2);
+  left: calc(var(--blockSize));
+}
+.i.rot-3 > div.block:nth-child(3) {
+  top: calc(var(--blockSize) * 2);
+  left: calc(var(--blockSize) * 2);
+}
+.i.rot-3 > div.block:nth-child(4) {
+  top: calc(var(--blockSize) * 2);
+  left: calc(var(--blockSize) * 3);
+}
+/*
+    [ ]
+    [ ]
+    [ ]
+    [ ]
+*/
+.i.rot-4 > div.block:nth-child(1) {
+  top: 0;
+  left: calc(var(--blockSize));
+}
+.i.rot-4 > div.block:nth-child(2) {
+  top: calc(var(--blockSize));
+  left: calc(var(--blockSize));
+}
+.i.rot-4 > div.block:nth-child(3) {
+  top: calc(var(--blockSize) * 2);
+  left: calc(var(--blockSize));
+}
+.i.rot-4 > div.block:nth-child(4) {
+  top: calc(var(--blockSize) * 3);
+  left: calc(var(--blockSize));
+}
