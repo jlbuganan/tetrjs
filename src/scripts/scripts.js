@@ -1,34 +1,55 @@
-// Init
-let shape = {
-  degrees: 0,
-  top: 150,
-  left: 300,
+
+// Global variable definitions
+let currentShape;
+let xPos, yPos;
+
+// Constants
+const shape = {
+  left: 0,
+  top: 0,
+  blockUnit: 15,
   moveUnit: 15,
-  rotationIndex: 1,
-  type: ''
+  rotationIndex: 1
 };
-let shapeTypes = [ 't', 'i', 'j', 'l', 's', 'z', 'o' ];
+const board = {
+  width: window.innerWidth,
+  height: window.innerHeight
+};
+const shapeTypes = [ 't', 'i', 'j', 'l', 's', 'z', 'o' ];
 
-// Stats
-let xPos = document.querySelector('#xPos');
-let yPos = document.querySelector('#yPos');
+initializeGame();
 
-// Get current shape and set initial position
-let currentShape = document.querySelector('#currentShape');
-generateRandomShape();
-setXandY(shape.left, shape.top);
+function initializeGame() {
+  // Stats
+  xPos = document.querySelector('#xPos');
+  yPos = document.querySelector('#yPos');
 
-// Listen for keydown
-window.addEventListener('keydown', transformShape);
+  // Get current shape, randomize it and set initial position
+  currentShape = document.querySelector('#currentShape');
+  setRandomCurrentShape();
+  resetShapePosition();
 
-function generateRandomShape() {
+  // Event handlers
+  window.addEventListener('keydown', transformShape);
+  window.addEventListener('resize', resetShapePosition);
+}
+
+function setRandomCurrentShape() {
   randomIndex = Math.floor(Math.random() * 6);
-  shape.type = shapeTypes[randomIndex];
   currentShape.classList.remove(shapeTypes.join(','));
-  currentShape.classList.add(shape.type);
+  currentShape.classList.add(shapeTypes[randomIndex]);
+}
+
+function resetShapePosition() {
+  board.width = window.innerWidth;
+  board.height = window.innerHeight;
+  shape.left = Math.floor(Math.floor(board.width / 2) / shape.blockUnit) * shape.blockUnit - shape.blockUnit;
+  shape.top = Math.floor(Math.floor(board.height / 2) / shape.blockUnit) * shape.blockUnit - shape.blockUnit;
+  setCurrentShapePos(shape.left, shape.top);
 }
 
 function transformShape(e) {
+  console.log(e.keyCode);
   switch(e.keyCode) {
     case 88: // Rotate Right
       currentShape.classList.remove(`rot-${shape.rotationIndex}`);
@@ -55,10 +76,10 @@ function transformShape(e) {
     default:
       break;
   }
-  setXandY(shape.left, shape.top);
+  setCurrentShapePos(shape.left, shape.top);
 }
 
-function setXandY(x, y) {
+function setCurrentShapePos(x, y) {
   currentShape.style.left = `${x}px`;
   currentShape.style.top = `${y}px`;
   xPos.innerHTML = x;
