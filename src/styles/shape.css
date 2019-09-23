@@ -1,6 +1,8 @@
 
 .shape {
   position: absolute;
+  width: calc(var(--blockSize) * 4);
+  height: calc(var(--blockSize) * 4);
 }
 
 .block {

@@ -1,21 +1,18 @@
 
 // Global variable definitions
-let currentShape;
 let xPos, yPos;
-
-// Constants
-const shape = {
+const shapeConfig = {
   left: 0,
   top: 0,
   blockUnit: 15,
   moveUnit: 15,
-  rotationIndex: 1
+  rotationIndex: 1,
+  shapeTypeIndex: 0
 };
-const board = {
-  width: window.innerWidth,
-  height: window.innerHeight
+const boardConfig = {
+  width: Math.floor(window.innerWidth / shapeConfig.blockUnit),
+  height: Math.floor(window.innerHeight / shapeConfig.blockUnit)
 };
-const shapeTypes = [ 't', 'i', 'j', 'l', 's', 'z', 'o' ];
 
 initializeGame();
 
@@ -25,63 +22,82 @@ function initializeGame() {
   yPos = document.querySelector('#yPos');
 
   // Get current shape, randomize it and set initial position
-  currentShape = document.querySelector('#currentShape');
   setRandomCurrentShape();
   resetShapePosition();
 
   // Event handlers
-  window.addEventListener('keydown', transformShape);
+  window.addEventListener('keyup', rotateShape);
+  window.addEventListener('keydown', moveShape);
   window.addEventListener('resize', resetShapePosition);
 }
 
 function setRandomCurrentShape() {
-  randomIndex = Math.floor(Math.random() * 6);
-  currentShape.classList.remove(shapeTypes.join(','));
-  currentShape.classList.add(shapeTypes[randomIndex]);
+  shapeConfig.shapeTypeIndex = Math.floor(Math.random() * 6);
+  shapeConfig.rotationIndex = 0;
+  drawShape(shapeConfig.shapeTypeIndex, shapeConfig.rotationIndex);
 }
 
 function resetShapePosition() {
-  board.width = window.innerWidth;
-  board.height = window.innerHeight;
-  shape.left = Math.floor(Math.floor(board.width / 2) / shape.blockUnit) * shape.blockUnit - shape.blockUnit;
-  shape.top = Math.floor(Math.floor(board.height / 2) / shape.blockUnit) * shape.blockUnit - shape.blockUnit;
-  setCurrentShapePos(shape.left, shape.top);
+  shapeConfig.left = Math.floor(boardConfig.width / 2) * shapeConfig.blockUnit - shapeConfig.blockUnit;
+  shapeConfig.top = Math.floor(boardConfig.height / 2) * shapeConfig.blockUnit - shapeConfig.blockUnit;
+  setCurrentShapePosition(shapeConfig.left, shapeConfig.top);
 }
 
-function transformShape(e) {
-  console.log(e.keyCode);
+function drawShape(shapeTypeIndex, rotationIndex) {
+  const shapeMatrix = shapeTypes[shapeTypeIndex][rotationIndex].toArray();
+  let blockIndex = 1;
+  for (var i = 0; i < shapeMatrix.length; i++) {
+    for (var j = 0; j < shapeMatrix[i].length; j++) {
+      if (shapeMatrix[i][j] === 1) {
+        currentBlock = document.querySelector(`#block${blockIndex}`);
+        currentBlock.style.left = j * shapeConfig.blockUnit + `px`;
+        currentBlock.style.top = i * shapeConfig.blockUnit + `px`;
+        blockIndex++;
+      }
+    }
+  }
+}
+
+function setCurrentShapePosition(x, y) {
+  const currentShape = document.querySelector('#currentShape');
+  currentShape.style.left = `${x}px`;
+  currentShape.style.top = `${y}px`;
+
+  // Display coordinates
+  xPos.innerHTML = x;
+  yPos.innerHTML = y;
+}
+
+// === EVENT HANDLERS ======================================= //
+function rotateShape(e) {
   switch(e.keyCode) {
     case 88: // Rotate Right
-      currentShape.classList.remove(`rot-${shape.rotationIndex}`);
-      shape.rotationIndex = (shape.rotationIndex === 4) ? 1 : shape.rotationIndex + 1;
-      currentShape.classList.add(`rot-${shape.rotationIndex}`);
+      shapeConfig.rotationIndex = (shapeConfig.rotationIndex === 3) ? 0 : shapeConfig.rotationIndex + 1;
+      drawShape(shapeConfig.shapeTypeIndex, shapeConfig.rotationIndex);
       break;
     case 90: // Rotate Left
-      currentShape.classList.remove(`rot-${shape.rotationIndex}`);
-      shape.rotationIndex = (shape.rotationIndex === 1) ? 4 : shape.rotationIndex - 1;
-      currentShape.classList.add(`rot-${shape.rotationIndex}`);
+      shapeConfig.rotationIndex = (shapeConfig.rotationIndex === 0) ? 3 : shapeConfig.rotationIndex - 1;
+      drawShape(shapeConfig.shapeTypeIndex, shapeConfig.rotationIndex);
       break;
+  }
+}
+
+function moveShape(e) {
+  switch(e.keyCode) {
     case 37: // Move Left
-      shape.left -= (shape.left <= 0) ? 0 : shape.moveUnit;
+      shapeConfig.left -= (shapeConfig.left <= 0) ? 0 : shapeConfig.moveUnit;
       break;
     case 38: // Move Up
-      shape.top -= (shape.top <= 0) ? 0 : shape.moveUnit;
+      shapeConfig.top -= (shapeConfig.top <= 0) ? 0 : shapeConfig.moveUnit;
       break;
     case 39: // Move Right
-      shape.left += (shape.left >= (window.visualViewport.width - shape.moveUnit * 3)) ? 0 : shape.moveUnit;
+      shapeConfig.left += (shapeConfig.left >= (window.visualViewport.width - shapeConfig.moveUnit * 3)) ? 0 : shapeConfig.moveUnit;
       break;
     case 40: // Move Down
-      shape.top += (shape.top >= (window.visualViewport.height - shape.moveUnit * 3)) ? 0 : shape.moveUnit;
+      shapeConfig.top += (shapeConfig.top >= (window.visualViewport.height - shapeConfig.moveUnit * 3)) ? 0 : shapeConfig.moveUnit;
       break;
     default:
       break;
   }
-  setCurrentShapePos(shape.left, shape.top);
-}
-
-function setCurrentShapePos(x, y) {
-  currentShape.style.left = `${x}px`;
-  currentShape.style.top = `${y}px`;
-  xPos.innerHTML = x;
-  yPos.innerHTML = y;
+  setCurrentShapePosition(shapeConfig.left, shapeConfig.top);
 }

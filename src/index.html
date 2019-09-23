@@ -3,19 +3,13 @@
   <head>
     <title>Tetrjs</title>
     <meta charset="utf-8">
-    <meta name="description" content="Tetris!">
+    <meta name="description" content="Tetris! (kinda)">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="keywords" content="tetris,tetrjs,javascript">
     <meta name="author" content="jerms buganan">
     <link rel="stylesheet" type="text/css" href="styles/shape.css">
-    <link rel="stylesheet" type="text/css" href="styles/shape-t.css">
-    <link rel="stylesheet" type="text/css" href="styles/shape-i.css">
-    <link rel="stylesheet" type="text/css" href="styles/shape-j.css">
-    <link rel="stylesheet" type="text/css" href="styles/shape-l.css">
-    <link rel="stylesheet" type="text/css" href="styles/shape-s.css">
-    <link rel="stylesheet" type="text/css" href="styles/shape-z.css">
-    <link rel="stylesheet" type="text/css" href="styles/shape-o.css">
     <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/6.2.1/math.js"></script>
   </head>
   <body>
     <div style="position:absolute;left:0;top:0;width:450px;height:15px;background-color:red;opacity:.3"></div>
@@ -31,13 +25,14 @@
     </div>
 
     <!-- === Main Shape ================ -->
-    <div id="currentShape" class="shape rot-1">
-      <div class="block"></div>
-      <div class="block"></div>
-      <div class="block"></div>
-      <div class="block"></div>
+    <div id="currentShape" class="shape">
+      <div id="block1" class="block"></div>
+      <div id="block2" class="block"></div>
+      <div id="block3" class="block"></div>
+      <div id="block4" class="block"></div>
     </div>
 
+    <script src="scripts/shapes.js"></script>
     <script src="scripts/scripts.js"></script>
   </body>
 </html>
